@@ -44,28 +44,28 @@
 		transition:
 			$transition,
 			box-shadow $ripple-fade-out-duration $ease-out;
-		box-shadow: inset 0 0 0 2px transparent;
+		box-shadow: inset 0 0 0 1px $control-border;
 		background-color: $entry;
 		color: $text;
 	}
 
 	@if $t == hover {
 		background-color: $overlay-hover;
-		box-shadow: inset 0 0 0 2px $overlay-hover;
+		box-shadow: inset 0 0 0 1px $control-border;
 	}
 
 	@if $t == focus {
 		background-color: $overlay-focus;
-		box-shadow: inset 0 0 0 2px if($fc == $primary, $track, $fc);
+		box-shadow: inset 0 0 0 1px if($fc == $primary, $control-border, $fc);
 	}
 
 	@if $t == checked {
 		background-color: $entry;
-		box-shadow: inset 0 0 0 2px if($fc == $primary, $primary, $fc);
+		box-shadow: inset 0 0 0 1px if($fc == $primary, $primary, $fc);
 	}
 
 	@if $t == disabled {
-		box-shadow: inset 0 0 0 2px transparent;
+		box-shadow: inset 0 0 0 1px $divider;
 		background-color: $entry;
 		color: $text-disabled;
 	}
@@ -107,7 +107,7 @@
 		background-color: $button;
 		color: $text;
 		border: none;
-		box-shadow: none;
+		box-shadow: inset 0 0 0 1px $control-border;
 		transition:
 			$transition,
 			background-size $ripple-fade-out-duration $ease-out,
@@ -118,13 +118,15 @@
 	@if $t == hover {
 		background-color: $overlay-hover;
 		color: $text;
+		box-shadow: inset 0 0 0 1px $control-border-hover;
 		outline: 0 solid transparent;
 	}
 
 	@if $t == focus {
 		background-color: $overlay-focus;
-		outline: 2px solid rgba($primary, 0.35);
-		outline-offset: 0;
+		box-shadow: inset 0 0 0 1px $control-border-hover;
+		outline: 1px solid $primary;
+		outline-offset: -1px;
 	}
 
 	@if $t == active {
@@ -139,25 +141,28 @@
 
 	@if $t == disabled {
 		background-color: $fill;
+		box-shadow: inset 0 0 0 1px $divider;
 		color: $text-disabled;
 		outline-color: transparent;
 	}
 
+	// Omarchy's "selected" control state: stronger fill, no border.
 	@if $t == checked {
-		background-color: $primary;
-		color: on($primary);
+		background-color: $overlay-checked;
+		box-shadow: none;
+		color: $text;
 	}
 
 	@if $t == checked-hover {
 		outline-color: transparent;
-		background-color: lighten($primary, 5%);
-		color: on($primary);
+		background-color: $overlay-active;
+		color: $text;
 	}
 
 	@if $t == checked-disabled {
 		outline-color: transparent;
-		background-color: rgba($primary, 0.35);
-		color: on($primary, disabled);
+		background-color: $overlay-checked;
+		color: $text-disabled;
 	}
 
 	@if $t == flat-normal {
@@ -181,8 +186,8 @@
 	@if $t == flat-focus {
 		background-color: $overlay-focus;
 		color: $text;
-		outline: 2px solid $fill;
-		outline-offset: -2px;
+		outline: 1px solid $primary;
+		outline-offset: -1px;
 	}
 
 	@if $t == flat-active {
