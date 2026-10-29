@@ -1,0 +1,40 @@
+// Omarchy surfaces for GTK4, applied on top of the upstream styles.
+//
+// Mirrors Omarchy's shell.toml defaults: popups use the window background with
+// Hyprland's 2px accent border, tooltips a 1px foreground border, and nothing
+// casts a shadow.
+
+popover > contents,
+popover > arrow {
+	background-color: $popover;
+	border: 2px solid $primary;
+	box-shadow: none;
+}
+
+popover.menu modelbutton {
+	&:hover,
+	&:selected {
+		background-color: $overlay-hover;
+		color: $primary;
+	}
+}
+
+tooltip.background {
+	background-color: rgba($background, 0.97);
+	color: $text;
+	border: 1px solid $text;
+	box-shadow: none;
+}
+
+// Omarchy puts background-colored text on its accent and red fills.
+button {
+	&.suggested-action,
+	&.destructive-action {
+		&,
+		&:hover,
+		&:active,
+		&:checked {
+			color: $background;
+		}
+	}
+}
