@@ -25,6 +25,28 @@ popover.background modelbutton.flat {
 	}
 }
 
+// GTK3 focuses a popover's first item on open and has no :focus-visible, so any
+// :focus fill would also light up for the mouse, next to the hovered item. It
+// only paints outlines for keyboard focus, so fill the item with one instead:
+// half the item's height, inset all the way. Hover stacks two 8% layers of the
+// accent text color, which comes to 15%.
+popover.background modelbutton.flat:focus:not(:hover):not(:active):not(:disabled) {
+	transition: none; // animating the outline opens a hole in the middle
+	box-shadow: inset 0 0 0 9999px transparent;
+	outline: ($menuitem-size / 2) solid rgba($primary, 0.15);
+	outline-offset: -($menuitem-size / 2);
+}
+
+popover.background.menu button,
+popover.background button.model {
+	&:focus:not(:hover):not(:active):not(:disabled) {
+		transition: none;
+		box-shadow: inset 0 0 0 9999px transparent;
+		outline: 16px solid rgba($primary, 0.15);
+		outline-offset: -16px;
+	}
+}
+
 tooltip.background,
 tooltip.background.csd {
 	background-color: rgba($background, 0.97);
