@@ -25,10 +25,10 @@ It's a fork of Fausto-Korpsvart's
   radius is 0. Radio buttons and slider knobs stay round, like in Omarchy's
   shell.
 - **Omarchy's control style**, taken from the `[controls]` defaults in
-  Omarchy's `shell.toml`: a 4% foreground fill with a 1px foreground border at
-  rest, 8% fill on hover, 18% fill with no border when selected or toggled,
-  and an accent border on focused entries. Switches are square, as Omarchy's
-  are when corners are sharp.
+  Omarchy 4.5's `shell.toml`: a 4% foreground fill with a 1px foreground
+  border at rest, 8% fill on hover, 18% fill with no border when selected or
+  toggled. Keyboard focus looks like hover, as it does in Omarchy's shell.
+  Switches are square, as Omarchy's are when corners are sharp.
 - **Popups like Omarchy's.** Menus, popovers and dialogs use the window
   background with a 2px accent border (Hyprland's active border) and no
   shadow. Tooltips get a 1px foreground border.
