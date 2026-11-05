@@ -49,7 +49,8 @@ This builds the theme and then:
 1. installs it to `~/.local/share/themes/Omarchy-Gruvbox`;
 2. writes the libadwaita layer to `~/.config/gtk-4.0/gtk.css`, after backing
    up any existing file to `gtk.css.before-omarchy-gruvbox`;
-3. sets `gtk-theme` to `Omarchy-Gruvbox` and `color-scheme` to `prefer-dark`.
+3. sets `gtk-theme` to `Omarchy-Gruvbox` and `color-scheme` to `prefer-dark`;
+4. re-applies Omarchy's Glassy blur to `gtk.css` if Glassy windows are on.
 
 Restart open GTK apps afterwards.
 
@@ -90,8 +91,9 @@ the first commit in this repo is that pristine import. Run
 ## Limitations
 
 - Dark only, since Omarchy's Gruvbox is dark.
-- It matches Omarchy's **Gruvbox** theme. Switching Omarchy themes doesn't
-  change GTK apps.
+- It matches Omarchy's **Gruvbox** theme. Switching Omarchy themes resets
+  `gtk-theme` to `Adwaita-dark` (GTK3 and plain GTK4 apps) but leaves the
+  libadwaita layer in place. Run `./install.sh` again after switching back.
 
 ## License
 
