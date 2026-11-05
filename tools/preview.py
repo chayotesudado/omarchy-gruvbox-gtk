@@ -5,7 +5,8 @@
     tools/preview.py adw       libadwaita (uses ~/.config/gtk-4.0/gtk.css)
     tools/preview.py gtk3      GTK3
 
-Pass --popover to open a menu popover once the window is shown, and
+Pass --popover to open a menu popover once the window is shown, --focus to
+put keyboard focus in the first entry, and
 --quit-after SECONDS to close on its own (handy for screenshots).
 """
 
@@ -14,6 +15,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("toolkit", choices=["gtk4", "adw", "gtk3"])
 parser.add_argument("--popover", action="store_true")
+parser.add_argument("--focus", action="store_true")
 parser.add_argument("--quit-after", type=float, default=0)
 args = parser.parse_args()
 
@@ -107,6 +109,8 @@ if args.toolkit == "gtk3":
 
         if args.popover:
             GLib.timeout_add(600, lambda: (menu_button.clicked(), False)[1])
+        if args.focus:
+            GLib.timeout_add(600, lambda: (entry.grab_focus(), False)[1])
         if args.quit_after:
             GLib.timeout_add(int(args.quit_after * 1000), lambda: (Gtk.main_quit(), False)[1])
         Gtk.main()
@@ -156,8 +160,10 @@ def controls():
         Gtk.Button(label="Flat", css_classes=["flat"]),
         Gtk.Button(label="Disabled", sensitive=False),
     )
+    focus_entry = Gtk.Entry(placeholder_text="Entry")
+    box.focus_entry = focus_entry
     row(
-        Gtk.Entry(placeholder_text="Entry"),
+        focus_entry,
         Gtk.SearchEntry(),
         Gtk.SpinButton.new_with_range(0, 100, 1),
         Gtk.DropDown.new_from_strings(["Dropdown", "Second", "Third"]),
@@ -214,7 +220,8 @@ def on_activate(app):
         content_header = Adw.HeaderBar()
         content_header.pack_start(Gtk.Button(label="Open"))
         content_header.pack_end(menu_button)
-        content = Adw.ToolbarView(content=Gtk.ScrolledWindow(child=controls()))
+        gallery = controls()
+        content = Adw.ToolbarView(content=Gtk.ScrolledWindow(child=gallery))
         content.add_top_bar(content_header)
         split = Adw.NavigationSplitView(
             sidebar=Adw.NavigationPage(child=side_page, title="Sidebar"),
@@ -227,12 +234,15 @@ def on_activate(app):
         header.pack_start(Gtk.Button(label="Open"))
         header.pack_end(menu_button)
         win.set_titlebar(header)
-        paned = Gtk.Paned(start_child=sidebar(), end_child=controls(), position=180)
+        gallery = controls()
+        paned = Gtk.Paned(start_child=sidebar(), end_child=gallery, position=180)
         win.set_child(paned)
 
     win.present()
     if args.popover:
         GLib.timeout_add(600, lambda: (menu_button.popup(), False)[1])
+    if args.focus:
+        GLib.timeout_add(600, lambda: (gallery.focus_entry.grab_focus(), False)[1])
     if args.quit_after:
         GLib.timeout_add(int(args.quit_after * 1000), lambda: (app.quit(), False)[1])
 
