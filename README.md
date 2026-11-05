@@ -1,7 +1,7 @@
 # Omarchy Gruvbox GTK
 
 A GTK3, GTK4 and libadwaita theme that matches [Omarchy](https://omarchy.org)'s
-Gruvbox theme: the exact same palette, and Omarchy 4's flat, square look.
+Gruvbox theme: the exact same palette, and Omarchy 4.5's flat, square look.
 
 ![libadwaita](docs/libadwaita.png)
 
